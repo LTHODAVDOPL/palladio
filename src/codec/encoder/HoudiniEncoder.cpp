@@ -170,12 +170,12 @@ void convertMaterialToAttributeMap(
 		const prtx::Material& prtxAttr,
 		const prtx::WStringVector& keys
 ) {
-	if (DBG) log_wdebug(L"-- converting material: %1%") % prtxAttr.name();
+	if (DBG) log_debug(L"-- converting material: %1%") % prtxAttr.name();
 	for(const auto& key : keys) {
 		if (MATERIAL_ATTRIBUTE_BLACKLIST.count(key) > 0)
 			continue;
 
-		if (DBG) log_wdebug(L"   key: %1%") % key;
+		if (DBG) log_debug(L"   key: %1%") % key;
 
 		switch(prtxAttr.getType(key)) {
 			case prt::Attributable::PT_BOOL:
@@ -243,7 +243,7 @@ void convertMaterialToAttributeMap(
 			}
 
 			default:
-				if (DBG) log_wdebug(L"ignored atttribute '%s' with type %d") % key % prtxAttr.getType(key);
+				if (DBG) log_debug(L"ignored atttribute '%s' with type %d") % key % prtxAttr.getType(key);
 				break;
 		}
 	}
@@ -388,12 +388,12 @@ SerializedGeometry serializeGeometry(const prtx::GeometryPtrVector& geometries, 
 			sg.normals.insert(sg.normals.end(), norms.begin(), norms.end());
 
 			const uint32_t numUVSets = mesh->getUVSetsCount();
-			log_wdebug(L"mesh name: %1% (numUVSets %2%)") % mesh->getName() % numUVSets;
+			log_debug(L"mesh name: %1% (numUVSets %2%)") % mesh->getName() % numUVSets;
 			if (numUVSets > 0) {
 				const prtx::DoubleVector& uvs0 = mesh->getUVCoords(0);
 				for (uint32_t uvSet = 0; uvSet < sg.uvs.size(); uvSet++) {
 					const prtx::DoubleVector& uvs = (uvSet < numUVSets) ? mesh->getUVCoords(uvSet) : EMPTY_UVS;
-					log_wdebug(L"uvSet %1%: uvs.size() = %2%") % uvSet % uvs.size();
+					log_debug(L"uvSet %1%: uvs.size() = %2%") % uvSet % uvs.size();
 					const auto& src = uvs.empty() ? uvs0 : uvs;
 					auto& tgt = sg.uvs[uvSet];
 					tgt.insert(tgt.end(), src.begin(), src.end());
